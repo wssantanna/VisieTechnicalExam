@@ -1,6 +1,6 @@
 // @domain
 import { ListProductUseCase } from "../domain/list-product.usecase";
-import { UnexpectedError } from "../domain/product-unexpected.error";
+import { UnexpectedError } from "../domain/unexpected.error";
 // @data
 import { HttpClient, HttpStatusCode } from "./http-client.protocols";
 import { ProductDTO } from "./product.dto";

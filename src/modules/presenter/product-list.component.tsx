@@ -57,12 +57,12 @@ const ProductList: React.FC<Props> = ({ service }) => {
                                                 </a>
                                             </li>
                                             <li className="nav-item">
-                                                <a className="nav-link py-0" href={`${currentProduct.id.toString()}`}>
+                                                <a className="nav-link py-0" href={currentProduct.id.toString()}>
                                                     <i className="bi bi-pencil"></i>
                                                 </a>
                                             </li>
                                             <li className="nav-item">
-                                                <a className="nav-link py-0" href={`${currentProduct.id.toString()}`}>
+                                                <a className="nav-link py-0" href={currentProduct.id.toString()}>
                                                     <i className="bi bi-trash3"></i>
                                                 </a>
                                             </li>
