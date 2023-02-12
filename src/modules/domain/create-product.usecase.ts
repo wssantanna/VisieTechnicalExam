@@ -2,5 +2,5 @@
 import { Product } from "./product.entity";
 
 export interface CreateProductUseCase {
-    create: (body: Product) => Promise<{ created: boolean }>
+    create: (body: Product) => Promise<Product>
 }

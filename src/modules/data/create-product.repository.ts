@@ -4,6 +4,7 @@ import { UnexpectedError } from "../domain/unexpected.error";
 // @data
 import { HttpClient, HttpStatusCode } from "./http-client.protocols";
 import { ProductCreateDTO } from "./product-create.dto";
+import { ProductDTO } from "./product.dto";
 
 export class CreateProductRepository implements CreateProductUseCase {
 
@@ -12,7 +13,7 @@ export class CreateProductRepository implements CreateProductUseCase {
         private readonly httpClient: HttpClient<ProductCreateDTO>
     ) { }
 
-    async create(product: ProductCreateDTO): Promise<{ created: boolean }> {
+    async create(product: ProductCreateDTO): Promise<ProductDTO> {
 
         const httpResponse = await this.httpClient.request({
             url: this.url,
