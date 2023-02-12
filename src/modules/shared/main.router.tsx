@@ -2,9 +2,9 @@ import { createBrowserRouter, Outlet } from 'react-router-dom';
 
 // @presenter
 import ProductList from '../presenter/product-list.component';
+import ProductCreate from '../presenter/product-create.component';
 import { ProductListService } from '../presenter/product-list.service';
-
-const productListService = new ProductListService();
+import { ProductCreateService } from '../presenter/product-create.service';
 
 const routes = [
     {
@@ -14,7 +14,11 @@ const routes = [
         children: [
             {
                 path: '',
-                element: <ProductList service={productListService} />
+                element: <ProductList listService={new ProductListService()} />
+            },
+            {
+                path: '/criar',
+                element: <ProductCreate createService={new ProductCreateService()} />
             },
         ]
     }
