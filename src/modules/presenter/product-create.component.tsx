@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 // @domain
 import { CreateProductUseCase } from '../domain/create-product.usecase';
+// @shared
+import { FormUtils } from '../shared/form.utils';
 
 type Props = {
     createService: CreateProductUseCase
@@ -14,43 +16,19 @@ const ProductCreate: React.FC<Props> = ({ createService }) => {
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
         
         event.preventDefault();
-
-        const getProductDataNotNullOrUndefined = (formElement: HTMLFormElement | EventTarget): any => {
-            
-            // @ts-ignore
-            const formData:HTMLFormElement = new FormData(formElement);
-            const productDataNotNullOrUndefined = {};
-
-            for(const datum of formData.entries()) {
-                if(datum[1]) {
-                    const key = datum[0];
-                    const value = datum[1];
-                    // @ts-ignore
-                    productDataNotNullOrUndefined[key] = value;
-                }
-            }
-            
-            return productDataNotNullOrUndefined;
-        }
-
         
-        try {
-            const product = getProductDataNotNullOrUndefined(event.target);
+        const product = FormUtils.getDataNotNullOrUndefined(event.target);
 
-            createService
-                .create(product)
-                .then(productCreated => {
-                    // Implementar o context tornar a lista global e atualizar com o response.
-                    console.log(productCreated);
+        createService
+            .create(product)
+            .then(productCreated => {
+                // Implementar o context tornar a lista global e atualizar com o response.
+                console.log(productCreated);
                     
-                    alert('Produto foi cadastrado com sucesso!');
-                    navigate('/');
-                })
-                .catch((error: Error) => alert(error.message));
-
-        } catch(error) {
-
-        }
+                alert('Produto foi cadastrado com sucesso!');
+                navigate('/');
+            })
+            .catch((error: Error) => alert(error.message));
     }
 
     return <>
