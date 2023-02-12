@@ -5,15 +5,15 @@ import { ListProductUseCase } from '../domain/list-product.usecase';
 import { ProductDTO } from '../data/product.dto';
 
 type Props = {
-    service: ListProductUseCase
+    listService: ListProductUseCase
 }
 
-const ProductList: React.FC<Props> = ({ service }) => {
+const ProductList: React.FC<Props> = ({ listService }) => {
 
     const [listProduct, setListProduct] = useState<ProductDTO[]>([]);
     
     useEffect(() => {
-        service
+        listService
         .getMany()
         .then((response: any) => setListProduct(response?.products));
     },[]);
@@ -23,9 +23,9 @@ const ProductList: React.FC<Props> = ({ service }) => {
             <div className="row">
                 <div className="col d-flex align-items-center justify-content-between">
                     <h1 className="display-6">Produtos</h1>
-                    <button className="btn btn-dark px-3 py-2">
+                    <a className="btn btn-dark px-3 py-2" href='criar'>
                         <i className="bi bi-plus"></i> Adicionar produto
-                    </button>
+                    </a>
                 </div>
             </div>
 
@@ -44,7 +44,7 @@ const ProductList: React.FC<Props> = ({ service }) => {
                         </thead>
                         <tbody className="table-group-divider">
                             {listProduct.map(currentProduct => (
-                                <tr>
+                                <tr key={currentProduct.id}>
                                     <th scope="row">{currentProduct.id}</th>
                                     <td>{currentProduct.title}</td>
                                     <td>{currentProduct.brand}</td>

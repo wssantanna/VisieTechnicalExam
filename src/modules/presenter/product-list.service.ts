@@ -1,22 +1,14 @@
 // @domain
 import { ListProductUseCase } from "../domain/list-product.usecase";
-// @data
-import { ProductDTO } from "../data/product.dto";
 // @infra
+import { ListProductRepository } from "../data/list-product.repository";
 import { AxiosAdapter } from "../infra/axios.adapter";
 
-export class ProductListService implements ListProductUseCase {
+export class ProductListService extends ListProductRepository implements ListProductUseCase {
 
-    async getMany(): Promise<ProductDTO[]> {
+    constructor() {
+        const endpoint = `${import.meta.env.VITE_BASE_URL_API}/products`;
         
-        const httpClient: AxiosAdapter = new AxiosAdapter();
-        const productListRequest = await httpClient.request({
-            // Colocar em uma variável de ambiente...
-            url: `${import.meta.env.VITE_BASE_URL_API}/products/?limit=10`,
-            method: 'get'
-        });
-        const productListResponse: ProductDTO[] = productListRequest.body;
-
-        return productListResponse;
+        super(endpoint, new AxiosAdapter());
     }
 }
