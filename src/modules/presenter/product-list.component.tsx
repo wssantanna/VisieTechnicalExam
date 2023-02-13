@@ -1,8 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 // @domain
 import { ListProductUseCase } from '../domain/list-product.usecase';
 // @data
 import { ProductDTO } from '../data/product.dto';
+// @presenter
+import { ProductContext } from './product.provider';
 
 type Props = {
     listService: ListProductUseCase
@@ -10,12 +13,17 @@ type Props = {
 
 const ProductList: React.FC<Props> = ({ listService }) => {
 
-    const [listProduct, setListProduct] = useState<ProductDTO[]>([]);
+    const navigate = useNavigate();
+
+    // @ts-ignore 
+    const [listProduct, setListProduct] = useContext(ProductContext);
     
     useEffect(() => {
+        
         listService
-        .getMany()
-        .then((response: any) => setListProduct(response?.products));
+            .getMany()
+            .then((response: any) => setListProduct(response?.products))
+            .catch((error: Error | any) => alert(error.message));
     },[]);
 
     return <>
@@ -43,7 +51,7 @@ const ProductList: React.FC<Props> = ({ listService }) => {
                             </tr>
                         </thead>
                         <tbody className="table-group-divider">
-                            {listProduct.map(currentProduct => (
+                            {listProduct.map((currentProduct : ProductDTO) => (
                                 <tr key={currentProduct.id}>
                                     <th scope="row">{currentProduct.id}</th>
                                     <td>{currentProduct.title}</td>
@@ -52,19 +60,19 @@ const ProductList: React.FC<Props> = ({ listService }) => {
                                     <td>
                                         <ul className="nav">
                                             <li className="nav-item">
-                                                <a className="nav-link py-0" href={currentProduct.id.toString()}>
+                                                <span className="nav-link py-0" onClick={() => navigate(`${currentProduct.id}`)}>
                                                     <i className="bi bi-eye"></i>
-                                                </a>
+                                                </span>
                                             </li>
                                             <li className="nav-item">
-                                                <a className="nav-link py-0" href={currentProduct.id.toString()}>
+                                                <span className="nav-link py-0" onClick={() => navigate(`${currentProduct.id}`)}>
                                                     <i className="bi bi-pencil"></i>
-                                                </a>
+                                                </span>
                                             </li>
                                             <li className="nav-item">
-                                                <a className="nav-link py-0" href={currentProduct.id.toString()}>
+                                                <span className="nav-link py-0" onClick={() => navigate(`${currentProduct.id}`)}>
                                                     <i className="bi bi-trash3"></i>
-                                                </a>
+                                                </span>
                                             </li>
                                         </ul>
                                     </td>
