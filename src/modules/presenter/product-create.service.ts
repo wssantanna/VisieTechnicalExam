@@ -4,7 +4,7 @@ import { CreateProductUseCase } from "../domain/create-product.usecase";
 import { CreateProductRepository } from "../data/create-product.repository";
 import { AxiosAdapter } from "../infra/axios.adapter";
 
-export class ProductCreateService extends CreateProductRepository implements CreateProductUseCase {
+export default class ProductCreateService extends CreateProductRepository implements CreateProductUseCase {
 
     constructor() {
         const endpoint = `${import.meta.env.VITE_BASE_URL_API}/products/add`;

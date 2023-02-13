@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 // @domain
 import { CreateProductUseCase } from '../domain/create-product.usecase';
@@ -18,17 +18,16 @@ const ProductCreate: React.FC<Props> = ({ createService }) => {
         event.preventDefault();
         
         const product = FormUtils.getDataNotNullOrUndefined(event.target);
+        try {
 
-        createService
-            .create(product)
-            .then(productCreated => {
-                // Implementar o context tornar a lista global e atualizar com o response.
-                console.log(productCreated);
-                    
-                alert('Produto foi cadastrado com sucesso!');
-                navigate('/');
-            })
-            .catch((error: Error) => alert(error.message));
+            await createService.create(product);
+
+            alert('Produto foi cadastrado com sucesso!');
+            navigate('/');
+        }
+        catch(error: Error | any) {
+            alert(error.message)
+        }
     }
 
     return <>
